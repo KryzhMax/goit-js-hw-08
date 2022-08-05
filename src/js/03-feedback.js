@@ -13,6 +13,7 @@ let storage = {
 // Functions
 
 getLocalStorageData(KEY);
+
 function getLocalStorageData(KEY) {
   const jsonData = JSON.parse(localStorage.getItem(KEY));
   if (!jsonData) return;
@@ -27,13 +28,19 @@ function onFormInput(event) {
 }
 
 function onFormSubmit(event) {
+  event.preventDefault();
+
   const { email, message } = event.currentTarget.elements;
   const formData = {
     email: email.value,
     message: message.value,
   };
-  event.preventDefault();
+
+  if (!formData.email || !formData.message) {
+    return alert('fill the form');
+  }
   formRef.reset();
+
   localStorage.removeItem(KEY);
 
   console.log('This is form: ', formData);
